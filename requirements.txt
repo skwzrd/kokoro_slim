@@ -1,0 +1,5 @@
+uvicorn
+soundfile
+torch
+kokoro
+flask
