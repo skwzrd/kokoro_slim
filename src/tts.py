@@ -11,12 +11,18 @@ def make_path(*filepaths):
     return os.path.realpath(os.path.join(os.path.dirname(__file__), *filepaths))
 
 
+def get_pipeline(
+        lang_code: Language=Language.AMERICAN_ENGLISH,
+        device: Device=Device.CPU,
+        repo_id: str="hexgrad/Kokoro-82M",
+    ) -> KPipeline:
+    return KPipeline(lang_code=lang_code.value, device=device.value, repo_id=repo_id)
+
+
 class KokoroTTS:
     def __init__(
         self,
-        lang_code=Language.AMERICAN_ENGLISH,
-        device: Device=Device.CPU,
-        repo_id="hexgrad/Kokoro-82M",
+        pipeline: KPipeline,
         ext: Ext = Ext.WAV,
         voice: Voice = Voice.AM_ADAM,
         speed: float = 1.0,
@@ -30,7 +36,7 @@ class KokoroTTS:
         - higher speed is faster speech
         - if callback_filename is specified, ignore filename
         """
-        self.pipeline = KPipeline(lang_code=lang_code.value, device=device.value, repo_id=repo_id)
+        self.pipeline = pipeline
         self.ext = ext
         self.voice = voice
         self.speed = speed
@@ -84,10 +90,14 @@ class KokoroTTS:
 if __name__ == "__main__":
     text = """I am so happy I drive a Cadillac. Gosh."""
 
-    tts = KokoroTTS(
+    pipeline = get_pipeline(
         lang_code=Language.AMERICAN_ENGLISH,
         device=Device.CPU,
         repo_id="hexgrad/Kokoro-82M",
+    )
+
+    tts = KokoroTTS(
+        pipeline,
         ext=Ext.WAV,
         voice=Voice.AM_ADAM,
         speed=1.0,
