@@ -68,7 +68,7 @@ HTML = '''
   {% if audio_url %}
     <h2>Audio</h2>
     <audio controls>
-        <source src='{{ audio_url }}' type='audio/{{ ext }}'>
+        <source src='{{ audio_url }}' type='audio/{{ ext.value }}'>
         Your browser does not support the audio element.
     </audio>
 
@@ -100,7 +100,7 @@ def index():
 
     if request.method == 'POST' and (text := request.form.get('text', '').strip()):
 
-        ext = request.form.get('ext', ext)
+        ext = Ext(request.form.get('ext', ext))
         tts.ext = ext
 
         lang_code = request.form.get('lang_code', lang_code)
