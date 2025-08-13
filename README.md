@@ -1,8 +1,6 @@
 # Kokoro Slim
 
-## About
-
-The other Kokoro repositories are like soiled napkins. Here is a clean wrapper for Kokoro.
+Other Kokoro repositories are like soiled napkins. Here is a clean wrapper for Kokoro.
 
 ## Set Up
 
